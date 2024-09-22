@@ -1,0 +1,22 @@
+# format this ci yaml 
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          rustflags: ""
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cross
+      - name: build mirrord-layer and cli
+        run: cross build --target=x86_64-unknown-linux-gnu
